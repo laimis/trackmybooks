@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block includes%}
+	<script src="/scripts/jquery.MetaData.js" type="text/javascript" language="javascript"></script>
+	<script src="/scripts/jquery.rating.js" type="text/javascript" language="javascript"></script>
+	
+	<link href="/stylesheets/jquery.rating.css" type="text/css" rel="stylesheet"/>
+	
+	<script src="/scripts/bookController.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	var bookController = null;
+	</script>
+{% endblock %}
+
+{% block onwindowload %}
+	 bookController = new BookController();
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+       
+{% block content %}
+	<strong>{{ title }}</strong> <br />
+	by {{ author }} <br />
+	{{ numberOfPages }} pages
+	<br /><br />
+	
+		<form action="/book/add" method="POST">
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td valign="top"><img src="{% if imageLarge %}{{ imageLarge }}{% else %}{{ image }}{% endif %}" /></td>
+	
+				<td valign="top" style="padding-left: 5px;">
+					{% if hasReader %}
+					
+					{% include "ratingtemplate.html" %}
+					
+					{% endif %}
+					
+					<br /><br />
+					{% if hasReader %}
+					{% if state %}
+					Your state: {{ state }}<br />
+					{% endif %}
+					{% endif %}
+					<input name="title" type="hidden" value="{{ title }}" />
+					<input name="author" type="hidden" value="{{ author }}" />
+					<input name="isbn" type="hidden" value="{{ isbn }}" />
+					<input name="image" type="hidden" value="{{ image }}" />
+					<input name="imageSmall" type="hidden" value"{{ imageSmall }}" />
+					<input name="imageLarge" type="hidden" value="{{ imageLarge }}" />
+					<input name="detailUrl" type="hidden" value="{{ detailUrl }}" />
+					<input name="tags" type="hidden" value"{{ detailUrl }}" />
+					<input name="numberOfPages" type="hidden" value="{{ numberOfPages }}" />
+					
+					<div style="margin-top: 15px">
+						<a href="http://www.chipublib.org/search/results/branch/128/?terms={{ bookSearchTerm }}&submitBranchCatalogSearch.x=0&submitBranchCatalogSearch.y=0&submitBranchCatalogSearch=go">
+						Chicago Public Library
+						</a>
+					</div>
+					
+					<div>
+						<a href="{{ detailUrl }}" target="_blank">See it on Amazon</a>
+					</div>
+					
+					<div>
+						Book Genres:
+						{{ bookTags_string }}
+					</div>
+					
+					
+					{% if hasReader %}
+					
+					<div style="margin-top: 15px">
+						Mark as:
+						<div><a href="/book/markAsTodo/{{ identifier }}">unread</a></div>
+						<div><a href="/book/markAsInProgress/{{ identifier }}">in-progress</a></div>
+						<div><a href="/book/markAsFinished/{{ identifier }}">finished</a></div>
+						
+						<br />
+						<a href="/book/delete/{{ identifier }}">remove it</a>
+					</div>
+					
+					<div style="margin-top: 15px">
+						Dates:
+						<div>Started:{% if inProgressDate %}{{ inProgressDate }} {% else %} not set {% endif %}</div>
+						<div>Finished:{% if finishedDate %}{{ finishedDate }} {% else %} not set {% endif %}</div>
+					</div>
+					
+					<div>
+						<br />
+						<a href="javascript:bookController.toggleNotes()">{%if notes %}Edit notes{% else %}Add notes{% endif %}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="javascript:bookController.saveNotes('{{ identifier }}')" style="display: none" id="saveLink">Save</a>
+						<span id="statusLabel" style="display: none"></span>
+						<br />
+						<textarea rows="10" cols="40" id="notes" name="notes" style="display: none">{%if notes %}{{ notes }}{% else %}{% endif %}</textarea>
+					</div>
+					
+					<div>
+						Tags: <input type="text" id="tags" name="tags" value="{{ tags_string }}" /> 
+						<a href="javascript:bookController.saveTags('{{ identifier }}')" id="saveTagsLink">Save Tags</a>
+						<span id="tagsStatusLabel" style="display: none"></span>
+					</div>
+					
+					{% else %}
+					
+						{% if loginUrlToAdd %}
+						<a href="{{ loginUrlToAdd }}">Login to add this book</a>
+						{% else %}
+							{%if signupUrl %}
+							<a href="{{ signupUrl }}">Sign up to add this book</a>
+							{% else %}
+								<input type="submit" value="Add" />
+							{% endif %}
+						{% endif %}
+						
+					{% endif %}
+				</td>
+				
+			</tr>
+		</table>
+		</form>
+{% endblock content %}

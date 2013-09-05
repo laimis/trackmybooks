@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+       
+	{% if message %}
+	<div style="color: green; height: 200px;">
+	{{ message }}
+	</div>
+
+	{% else %}
+
+	{% if error %}
+	<div style="color: red">
+	{{ error }}
+	</div>
+	{% endif %}
+
+	<form action="/contact/" method="post">
+		<div>Name:<br />
+		<input type="text" name="name" />
+		</div>
+		<div>Email:<br />
+		<input type="text" name="email" />
+		</div>
+		<div>Message:<br />
+		<textarea rows="10" cols="50" name="message"></textarea>
+		</div>
+		<input type="hidden" value="{{ timestamp }}" />
+		<div><input type="submit" value="Submit" /></div>
+	</form>
+
+	{% endif %}
+
+{% endblock content %}

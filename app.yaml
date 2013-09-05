@@ -1,0 +1,28 @@
+application: trackmybooks
+version: 3
+runtime: python
+api_version: 1
+
+handlers:
+  
+- url: /stylesheets
+  static_dir: stylesheets
+  
+- url: /images
+  static_dir: images
+
+- url: /scripts
+  static_dir: scripts
+
+- url: /test
+  static_dir: test
+  
+- url: /tasks/bookadded
+  script: tasks/handler.py
+- url: /tasks/bookfinished
+  script: tasks/handler.py
+- url: /tasks/bookinprogress
+  script: tasks/handler.py
+  
+- url: /.*
+  script: init.py

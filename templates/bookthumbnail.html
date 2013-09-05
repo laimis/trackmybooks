@@ -1,0 +1,14 @@
+<a href="/book/view/{{book.identifier }}">
+<div class="bookThumbListing">
+	<img src="{{ book.image }}" alt="{{ book.title }}" title="{{ book.title }}" /></a>
+
+	{% if showRatings %}
+	{% include "ratingtemplate.html" %}
+	<script type="text/javascript">
+	$('input.staritup{{ forloop.counter }}').rating({callback : function(value, link) {submitRating(value, '{{ book.identifier }}');}});
+	</script>
+	{% endif %}
+	
+	{% if book.notes %}<img src="/images/hasnote.png" alt="has note" title="has note" />{% endif %}
+</div>
+</a>

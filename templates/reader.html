@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if isNew or not isLoggedIn %}
+	Create Profile
+	
+	{% if not isLoggedIn %}
+	<small>(or <a href="{{loginUrl}}">login<a/>)</small>
+	{% endif %}
+	
+{% else %}
+	Profile 
+{% endif %}
+{% endblock %}
+       
+{% block content %}
+	
+	{% if errorMsg %}
+	<div class="error">
+		{{ errorMsg }}
+	</div>
+	{% endif %}
+	
+	{% if isNew %}
+	<form action="/reader/create" method="POST">
+	{% else %}
+	<form action="/reader/update" method="POST">
+	{% endif %}
+		<p class="reader">
+		<label for="username">Username:</label><br />
+		<input type="text" value="{{username}}" name="username" />
+		</p>
+		
+		<p  class="reader">
+		<label for="name">Name:</label><br />
+		<input type="text" value="{{name}}" name="name" />
+		</p>
+		
+		<p>
+		Email: {{email}} <br />
+		</p>
+		
+		{% if isNew %}
+		<input type="submit" value="Create" />
+		{% else %}
+		<input type="submit" value="Update" />
+		{% endif %}
+	</form>
+	
+	{% if isLoggedIn %}
+	<p>
+	If you would like to logout, click <a href="{{ logoutUrl }}">here</a>
+	</p>
+	<p>
+	If you would like to remove you account, please click delete button
+	<form action="/reader/delete" method="POST">
+		<input type="submit" value="Delete" />
+	</form>
+	</p>
+	{% endif %}
+{% endblock content %}

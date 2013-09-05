@@ -1,0 +1,9 @@
+queue:
+- name: bookadded
+  rate: 2/s
+
+- name: bookfinished
+  rate: 2/s
+
+- name: bookinprogress
+  rate: 2/s

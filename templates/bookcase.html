@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block includes%}
+	<script src="/scripts/jquery.MetaData.js" type="text/javascript" language="javascript"></script>
+	<script src="/scripts/jquery.rating.js" type="text/javascript" language="javascript"></script>
+	
+	<link href="/stylesheets/jquery.rating.css" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block title %}
+{% if books %}
+	My Bookcase
+{% else %}
+{% endif %}
+{% endblock title %}
+
+
+{% block content %}
+{% if books or totalCount %}
+	
+	{% if showPaging %}
+	<div id="pager">
+		{% if currentState %}
+		viewing books marked as {{ currentState }} ({{ totalCount }}), <a href="{{ navRoot }}">view all</a>
+		{% else %}
+		<a style="text-decoration: none;" href="{{ navRoot }}/unread">unread ({{ toReadCount}})</a> -
+		<a style="text-decoration: none;" href="{{ navRoot }}/inprogress">in progress ({{ inProgressCount }})</a> -
+		<a style="text-decoration: none;" href="{{ navRoot }}/finished">finished ({{ finishedCount }})</a> -
+		<a style="text-decoration: none;" href="{{ navRoot }}/unrated">unrated</a>
+		total of {{ totalCount }} books.
+		{% endif %}
+		
+		<div style="float: right;">
+			page {{ currentPage }} of {{ maxPages}} &nbsp;&nbsp; &nbsp;&nbsp; 
+			<a href="{{ navRoot }}/{{ currentStateForPaging }}">&lt;&lt;</a>
+			&nbsp;&nbsp; 
+			<a href="{{ navRoot }}/{{ currentStateForPaging }}{{ prevPage }}">previous</a>
+			&nbsp;&nbsp; 
+			<a href="{{ navRoot }}/{{ currentStateForPaging }}{{ nextPage }}">next</a> 
+			&nbsp;&nbsp; 
+			<a href="{{ navRoot }}/{{ currentStateForPaging }}{{ maxPages }}">&gt;&gt;</a>
+		</div>
+	</div>
+	{% endif %}
+	
+	{% if books %}
+	{% for book in books %}
+		
+		{% include viewtype %}
+		
+	{% endfor %}	
+	{% else %}
+	There are no books with the selected status
+	{% endif %}
+{% else %}
+	
+	Your bookcase is empty right now.	
+	<br /><br />
+	{% if hasReader %}
+	<div>
+		<a href="/search">Find the books you have read, are reading, or plan on reading</a>.
+	</div>
+	{% else %}
+	<div>
+		<a href="/reader">Finish creating your account </a> and start <a href="/search">adding books</a>.
+	</div>
+	{% endif %}
+	
+{% endif %}
+
+{% endblock content %}

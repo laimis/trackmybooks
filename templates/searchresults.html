@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{%block includes%}
+<script type="text/javascript" src="/scripts/searchController.js" />
+<script type="text/javascript">
+	var searchController = null;
+</script>
+{%endblock%}
+
+{% block onwindowload %}
+	searchController = new SearchController();
+{% endblock %}
+
+{% block title %}
+{% if results %}
+	Search Results
+{% else %}
+	Search
+{% endif %}
+{% endblock %}
+       
+{% block content %}
+
+	 <!-- {% include "searchform.html" %} -->
+	
+	{% if results %}
+	
+		{% if showPaging %}
+		<p id="pager">
+			page: {{ currentPage }} of {{ maxPages}} &nbsp;&nbsp; &nbsp;&nbsp; 
+			<a href="/search?keywords={{keywords}}">&lt;&lt;</a>
+			&nbsp;&nbsp; 
+			<a href="/search/{{ prevPage }}?keywords={{keywords}}">previous</a>
+			&nbsp;&nbsp; 
+			<a href="/search/{{ nextPage }}?keywords={{keywords}}">next</a> 
+			&nbsp;&nbsp; 
+			<a href="/search/{{ maxPages }}?keywords={{keywords}}">&gt;&gt;</a>
+		</p>
+		{% endif %}
+	
+	{% for book in results %}
+	
+		{% include "searchresult.html" %}
+		
+	{% endfor %}
+	{% endif %}
+
+{% endblock content %}

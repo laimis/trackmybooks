@@ -1,0 +1,2 @@
+http://www.fyneworks.com/jquery/star-rating/
+for jquery plugin

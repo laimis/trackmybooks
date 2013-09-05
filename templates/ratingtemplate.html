@@ -1,0 +1,27 @@
+{% if book %}
+<div class="bookcaseRating">
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="1" {%ifequal book.rating 1 %}checked="checked"{% endifequal %}/>
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="2" {%ifequal book.rating 2 %}checked="checked"{% endifequal %}/>
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="3" {%ifequal book.rating 3 %}checked="checked"{% endifequal %}/>
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="4" {%ifequal book.rating 4 %}checked="checked"{% endifequal %}/>
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="5" {%ifequal book.rating 5 %}checked="checked"{% endifequal %}/>
+</div>
+{% else %}
+<div class="Clear">
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="1" {%ifequal rating 1 %}checked="checked"{% endifequal %}/>
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="2" {%ifequal rating 2 %}checked="checked"{% endifequal %}/>
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="3" {%ifequal rating 3 %}checked="checked"{% endifequal %}/>
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="4" {%ifequal rating 4 %}checked="checked"{% endifequal %}/>
+	<input type="radio" name="rateStar{{ forloop.counter }}" class="staritup{{ forloop.counter }}" value="5" {%ifequal rating 5 %}checked="checked"{% endifequal %}/>
+</div>
+{% endif %}
+
+<script type="text/javascript">
+var options = {}
+options["callback"] = function(value, link) {submitRating(value, '{% if book.identifier %}{{ book.identifier }}{%else%}{{ identifier }}{%endif%}')};
+{% if readOnly %}
+options["readOnly"] = true;
+{% endif %}
+
+$('input.staritup{{ forloop.counter }}').rating(options);
+</script>

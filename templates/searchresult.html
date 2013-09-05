@@ -1,0 +1,37 @@
+<div class="searchResult">
+	<a href="/book/isbn/{{ book.isbn }}/">
+	<div style="float: left; text-align: center;">
+		<img style="margin: 0px; width: 50px;" src="{{ book.imageSmall }}" />
+	</div>
+	</a>
+	<div class="searchResultTitle">
+		<a href="/book/isbn/{{ book.isbn }}/"><strong>{{book.title}}</strong></a>
+		<br />
+		by {{book.author}}
+	</div>
+	{% if isLoggedIn %}
+		<div class="searchResultActionLinks">
+		{% if book.state %}
+			
+			{% if showRatings %}
+				{% include "ratingtemplate.html" %}
+				<script type="text/javascript">
+				$('input.staritup{{ forloop.counter }}').rating({callback : function(value, link) {submitRating(value, '{{ book.identifier }}');}});
+				</script>
+			{% endif %}
+			
+			{% if book.notes %}<img src="/images/hasnote.png" alt="has note" title="has note" />{% endif %}
+			
+			<span style="margin-top: 2px; margin-left: 5px;"><strong>{{ book.state }}</strong></span>
+			
+		{% else %}
+				Add to your library as: 
+					<a href="javascript:searchController.addBook('{{ book.isbn }}', 'unread')">unread</a>,
+					<a href="javascript:searchController.addBook('{{ book.isbn }}', 'inprogress')">in-progress</a>,
+					<a href="javascript:searchController.addBook('{{ book.isbn }}', 'finished')">finished</a>
+					<span id="addStatus{{book.isbn}}"></span>
+		{% endif %}
+		</div>
+	{% endif %}
+	<br clear="all" />
+</div>

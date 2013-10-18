@@ -36,12 +36,15 @@ def index(request):
 	template_values["inprogressBooks"] = []
 	
 	def appendBooks(bookList, viewList):
+		if bookList is None:
+			bookList = BookList()
+			
 		if bookList.list is None: 
 			bookList.list = ()
 			
 		for key in bookList.list[0:5]:
 			bookKey = db.Key(key)
-			if bookKey.app() == "trackmybooks"
+			if bookKey.app() == "trackmybooks":
 				bookKey = db.Key.from_path(*bookKey.to_path())
 			book = Book.get(bookKey)
 			if book: viewList.append( mapping.toReaderBookTemplate(book, None) )

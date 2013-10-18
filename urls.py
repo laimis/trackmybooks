@@ -41,6 +41,7 @@ urlpatterns = patterns(
 	(r'^tags/view/(?P<tag>\w+)/?$', 'views.tags.view'),
 	
 	(r'^calendar/?$', 'views.calendar.index'),
+	(r'^layout/?$', 'views.calendar.layout'),
 	
 	
 	(r'^test/?$', 'views.test.index'),

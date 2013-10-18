@@ -1,6 +1,5 @@
-import wsgiref.handlers
 from google.appengine.ext import db
-from google.appengine.ext import webapp
+import webapp2
 
 from models import BookList
 
@@ -14,12 +13,12 @@ def recordEvent(bookList, value):
 	bookList.put()
 	return ""
 
-class BookAddedHandler(webapp.RequestHandler):
+class BookAddedHandler(webapp2.RequestHandler):
 	def post(self):
 		bookList = BookList.getUnread()
 		return recordEvent( bookList, self.request.get('book') )
 
-class BookAddedToReader(webapp.RequestHandler):
+class BookAddedToReader(webapp2.RequestHandler):
 	def post(self):
 		
 		reader = Reader.get(self.request.get('reader'))
@@ -32,22 +31,18 @@ class BookAddedToReader(webapp.RequestHandler):
 			
 		timeline.AddBook(book)
 		
-class BookFinishedHandler(webapp.RequestHandler):
+class BookFinishedHandler(webapp2.RequestHandler):
 	def post(self):
 		bookList = BookList.getFinished()
 		return recordEvent( bookList, self.request.get('book') )
 
-class BookInprogressHandler(webapp.RequestHandler):
+class BookInprogressHandler(webapp2.RequestHandler):
 	def post(self):
 		bookList = BookList.getInProgress()
 		return recordEvent( bookList, self.request.get('book') )
 
-def main():
-  wsgiref.handlers.CGIHandler().run(webapp.WSGIApplication([
+jobApp = webapp2.WSGIApplication([
     ('/tasks/bookadded', BookAddedHandler),
 	('/tasks/bookfinished', BookFinishedHandler),
 	('/tasks/bookinprogress', BookInprogressHandler),
-  ]))
-
-if __name__ == '__main__':
-  main()
+  ])

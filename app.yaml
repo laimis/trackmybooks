@@ -1,7 +1,8 @@
-application: trackmybooks
-version: 3
-runtime: python
+application: trackmybooks-hrd
+version: 4
+runtime: python27
 api_version: 1
+threadsafe: true
 
 handlers:
   
@@ -18,11 +19,17 @@ handlers:
   static_dir: test
   
 - url: /tasks/bookadded
-  script: tasks/handler.py
+  script: tasks.handler.jobApp
+  
 - url: /tasks/bookfinished
-  script: tasks/handler.py
+  script: tasks.handler..jobApp
 - url: /tasks/bookinprogress
-  script: tasks/handler.py
+  script: tasks.handler.jobApp
   
 - url: /.*
-  script: init.py
+  script: init.app
+  
+
+libraries:
+- name: django
+  version: "1.2"

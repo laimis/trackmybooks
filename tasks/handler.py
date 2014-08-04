@@ -7,16 +7,15 @@ def recordEvent(bookList, value):
 	lst = bookList.list
 	lst.insert(0, value)
 		
-	if len(lst) > 10:
-		lst = lst[0:10]
-	
+	if len(lst) > 20:
+		lst = lst[0:20]
+	bookList.list = lst
 	bookList.put()
-	return ""
-
+	
 class BookAddedHandler(webapp2.RequestHandler):
 	def post(self):
 		bookList = BookList.getUnread()
-		return recordEvent( bookList, self.request.get('book') )
+		recordEvent( bookList, self.request.get('book') )
 
 class BookAddedToReader(webapp2.RequestHandler):
 	def post(self):
@@ -34,12 +33,12 @@ class BookAddedToReader(webapp2.RequestHandler):
 class BookFinishedHandler(webapp2.RequestHandler):
 	def post(self):
 		bookList = BookList.getFinished()
-		return recordEvent( bookList, self.request.get('book') )
+		recordEvent( bookList, self.request.get('book') )
 
 class BookInprogressHandler(webapp2.RequestHandler):
 	def post(self):
 		bookList = BookList.getInProgress()
-		return recordEvent( bookList, self.request.get('book') )
+		recordEvent( bookList, self.request.get('book') )
 
 jobApp = webapp2.WSGIApplication([
     ('/tasks/bookadded', BookAddedHandler),

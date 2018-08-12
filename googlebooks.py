@@ -89,7 +89,7 @@ class GoogleBooks:
 		if "categories" in item:
 			result.genre = ",".join(item["categories"])
 		else:
-			result.genre = None
+			result.genre = ""
 
 		if "pageCount" in item:
 			result.numberOfPages = item["pageCount"]

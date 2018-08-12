@@ -69,15 +69,24 @@ class GoogleBooks:
 		result.detailUrl = item["infoLink"]
 		result.author = ", ".join(item["authors"])
 		result.title = item["title"]
-		result.image = item["imageLinks"]["thumbnail"]
-		result.imageSmall = item["imageLinks"]["smallThumbnail"]
-		result.imageLarge = item["imageLinks"]["thumbnail"]
+
+		if "imageLinks" in item:
+			result.image = item["imageLinks"]["thumbnail"]
+			result.imageSmall = item["imageLinks"]["smallThumbnail"]
+			result.imageLarge = item["imageLinks"]["thumbnail"]
+		else:
+			result.image = None
+			result.imageSmall = None
+			result.imageLarge = None
 
 		if "categories" in item:
 			result.genre = ",".join(item["categories"])
 		else:
 			result.genre = None
 
-		result.numberOfPages = item["pageCount"]
+		if "pageCount" in item:
+			result.numberOfPages = item["pageCount"]
+		else:
+			result.numberOfPages = None
 		
 		return  result

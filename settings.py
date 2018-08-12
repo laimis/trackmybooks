@@ -5,8 +5,8 @@ ROOT_URLCONF = 'urls'
 APPEND_SLASH = False
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.doc.XViewMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'customexceptions.ExceptionHandler'
 )
 
 INSTALLED_APPS = (

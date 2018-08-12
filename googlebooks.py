@@ -5,6 +5,8 @@ from google.appengine.api import urlfetch
 
 import json
 
+NO_IMAGE_URL = "/static/images/nopicture.jpg"
+
 class SearchResults:
 	pass
 
@@ -40,11 +42,11 @@ class GoogleBooks:
 		results.TotalResults = response["totalItems"]
 			
 		results.items = []
-			
-		for item in response["items"]:
-			
-			result = self.createResult(item["volumeInfo"])
-			results.items.append(result)
+		
+		if "items" in response:
+			for item in response["items"]:
+				result = self.createResult(item["volumeInfo"])
+				results.items.append(result)
 			
 		return results
 		
@@ -67,7 +69,12 @@ class GoogleBooks:
 				break
 		
 		result.detailUrl = item["infoLink"]
-		result.author = ", ".join(item["authors"])
+
+		if "authors" in item:
+			result.author = ", ".join(item["authors"])
+		else:
+			result.author = None
+
 		result.title = item["title"]
 
 		if "imageLinks" in item:
@@ -75,9 +82,9 @@ class GoogleBooks:
 			result.imageSmall = item["imageLinks"]["smallThumbnail"]
 			result.imageLarge = item["imageLinks"]["thumbnail"]
 		else:
-			result.image = None
-			result.imageSmall = None
-			result.imageLarge = None
+			result.image = NO_IMAGE_URL
+			result.imageSmall = NO_IMAGE_URL
+			result.imageLarge = NO_IMAGE_URL
 
 		if "categories" in item:
 			result.genre = ",".join(item["categories"])

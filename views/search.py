@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from django.template import Context
 
-from amazon import AmazonInterface
+from googlebooks import GoogleBooks
 
 from models import Reader
 from helpers import paging
@@ -19,7 +19,7 @@ def find(request, keyword = "", page = 1):
 	results = []
 	
 	if keyword:
-		results = AmazonInterface().search(keyword, page)
+		results = GoogleBooks().search(keyword, page)
 		
 		template_values = {
 			'totalResults': results.TotalResults,

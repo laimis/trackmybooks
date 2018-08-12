@@ -13,7 +13,7 @@ from models import Book
 from models import ReaderBook
 from models import Reader
 from tasks import dispatcher
-from amazon import AmazonInterface
+from googlebooks import GoogleBooks
 from helpers import mapping
 
 def view(request, identifier):
@@ -33,7 +33,7 @@ def viewByIsbn(request, isbn = ""):
 	if user:
 		reader = Reader.byCurrentUser()
 	
-	book = fetchCreateByISBN(isbn, invokeAmazonSearchByIsbn, True)
+	book = fetchCreateByISBN(isbn, invokeSearchByIsbn, True)
 	
 	readerBook = ReaderBook.byReaderAndBook(reader, book)
 		
@@ -47,8 +47,8 @@ def viewByIsbn(request, isbn = ""):
 	
 	return render(template_values)
 
-def invokeAmazonSearchByIsbn(isbn):
-	return AmazonInterface().getBookByIsbn(isbn)
+def invokeSearchByIsbn(isbn):
+	return GoogleBooks().getBookByIsbn(isbn)
 
 def delete(request, identifier):
 	book = Book().get(identifier)

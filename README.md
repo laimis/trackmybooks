@@ -6,11 +6,10 @@ trackmybooks
 Functions:
 
 - add / remove / list books you want to read / are reading / have read
-- search in amazon
-- links for the book's entry in Chicago Public Library and Amazon
+- search in Google Books
 - notes / Review
 - star rating
-- covers fetched from Amazon
+- covers fetched from Google Books
 - view by month which books were read
 
 Learned Python and GAE and had some fun :)

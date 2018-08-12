@@ -23,8 +23,8 @@ class SearchResult:
 class AmazonInterface:
 	
 	def __init__(self):
-		self.secretKey = "HMWW6RQ4i03mD6oRpBr3gX1aCNAgrzmfZWj3ltug"
-		self.awsAccessKey = "14XY5XMAJ7BFFMAX9Z02"
+		self.secretKey = ""
+		self.awsAccessKey = ""
 		self.responseGroup = urllib.quote("Small,Images,BrowseNodes,ItemAttributes")
 	
 	def searchXml(self, keyword, page):
@@ -57,6 +57,8 @@ class AmazonInterface:
 		# try:
 			
 			# return result.content
+			
+			# logging.error("XML returned: " + resultsXml.content)
 			
 			xmldoc = minidom.parseString(resultsXml.content)
 					
@@ -113,7 +115,7 @@ class AmazonInterface:
 		dict["AWSAccessKeyId"] = self.awsAccessKey
 		dict["ResponseGroup"] = self.responseGroup
 		dict["Service"] = "AWSECommerceService"
-		dict["AssociateTag"] = "trmybo-20"
+		dict["AssociateTag"] = "laimonaslt-20"
 		
 		paramsList = []
 		

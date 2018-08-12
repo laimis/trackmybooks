@@ -15,6 +15,23 @@ from models import ReaderBook
 from helpers import paging
 from helpers import mapping
 
+import csv
+
+def export(request):
+	reader = Reader().byCurrentUser()
+	collection = ReaderBook.finishedBooks(reader)
+
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+
+	writer = csv.writer(response)
+	writer.writerow(['Title', 'ISBN', 'My Rating', 'Date Read', 'Date Added'])
+	for c in collection:
+		title = c.book.title.replace('""', '')
+		writer.writerow([title,c.book.isbn,c.rating,c.finishedDate,c.created])
+
+	return response
+
 def index(request, state=None, page=1):
 	reader = Reader().byCurrentUser()
 	user = users.get_current_user()

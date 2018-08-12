@@ -27,6 +27,7 @@ urlpatterns = patterns(
 	# bookcase and bookcase paged
 	(r'^bookcase/?$', 'views.bookcase.index'),
 	(r'^bookcase/(?P<page>\d+)/?$', 'views.bookcase.index'),
+	(r'^bookcase/export?$', 'views.bookcase.export'),
 	
 	(r'^bookcase/(?P<state>(unread|inprogress|finished|unrated))/?$', 'views.bookcase.index'),
 	(r'^bookcase/(?P<state>(unread|inprogress|finished|unrated))/(?P<page>\d+)/?$', 'views.bookcase.index'),

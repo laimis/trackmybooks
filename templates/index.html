@@ -27,6 +27,15 @@
 	{% endif %}
 	<br /><br />
 	<table width="100%">
+		<tr><td>Latest books being read right now</td></tr>
+		<tr><td>
+			{% for book in inprogressBooks %}
+				{% include "bookthumbnail.html" %}
+			{% endfor %}
+		</td></tr>
+	</table>
+	
+	<table width="100%">
 		<tr><td>Latest added books</td></tr>
 		<tr><td>
 			{% for book in addedBooks %}
@@ -39,15 +48,6 @@
 		<tr><td>Latest finished books</td></tr>
 		<tr><td>
 			{% for book in finishedBooks %}
-				{% include "bookthumbnail.html" %}
-			{% endfor %}
-		</td></tr>
-	</table>
-	
-	<table width="100%">
-		<tr><td>Latest books being read right now</td></tr>
-		<tr><td>
-			{% for book in inprogressBooks %}
 				{% include "bookthumbnail.html" %}
 			{% endfor %}
 		</td></tr>

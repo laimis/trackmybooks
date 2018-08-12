@@ -21,8 +21,6 @@ def find(request, keyword = "", page = 1):
 	if keyword:
 		results = AmazonInterface().search(keyword, page)
 		
-		# return HttpResponse(results, mimetype="text/xml")
-		
 		template_values = {
 			'totalResults': results.TotalResults,
 			'results': results.items,

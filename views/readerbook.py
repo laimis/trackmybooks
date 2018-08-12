@@ -146,7 +146,7 @@ def ajaxAddBook(request):
 	if not reader:
 		return HttpResponse("Login or create account to add books")
 	
-	book = fetchCreateByISBN(request.POST["isbn"], invokeAmazonSearchByIsbn, True)
+	book = fetchCreateByISBN(request.POST["isbn"], invokeSearchByIsbn, True)
 	
 	createReaderBookIfNecessary(reader, book, request.POST["state"])
 	

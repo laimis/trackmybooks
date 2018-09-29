@@ -45,8 +45,13 @@ class GoogleBooks:
 		
 		if "items" in response:
 			for item in response["items"]:
-				result = self.createResult(item["volumeInfo"])
-				results.items.append(result)
+
+				volInfo = item["volumeInfo"]
+
+				# only add results that have isbn numbers (industry identifiers)
+				if "industryIdentifiers" in volInfo:
+					result = self.createResult(item["volumeInfo"])
+					results.items.append(result)
 			
 		return results
 		
